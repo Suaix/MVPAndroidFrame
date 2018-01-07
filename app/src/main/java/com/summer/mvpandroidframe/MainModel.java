@@ -15,6 +15,7 @@ public class MainModel extends BaseModel<MainPrensenter> {
     @Override
     protected void initModel() {
         result = "this is result form MainModel";
+
     }
 
     public void getTestResult() {
