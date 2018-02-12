@@ -1,5 +1,6 @@
 package com.summer.mvpandroidframe;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,21 +13,17 @@ public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
     private Button bt;
     private TextView tv;
 
-    /**
-     * 获取布局资源的id，用来填充页面
-     *
-     * @return 页面布局id
-     */
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
+    protected void onCreateExecute(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
+        initView();
+        addListener();
     }
 
     /**
      * 初始化布局控件
      */
-    @Override
-    protected void initView() {
+    private void initView() {
         bt = findViewById(R.id.bt_add_data);
         tv = findViewById(R.id.tv_content);
     }
@@ -34,8 +31,7 @@ public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
     /**
      * 给控件添加Listener
      */
-    @Override
-    protected void addListener() {
+    private void addListener() {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

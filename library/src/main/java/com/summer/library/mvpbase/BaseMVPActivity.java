@@ -36,8 +36,7 @@ public abstract class BaseMVPActivity<P extends IPresenter> extends BaseActivity
         mPresenter = createPresenter();
         mPresenter.initUI(this, getUI());
         //设置布局
-        int layoutResId = getLayoutResId();
-        setContentView(layoutResId);
+        onCreateExecute(savedInstanceState);
         //初始化布局控件
         initView();
         //设置监听
@@ -107,10 +106,11 @@ public abstract class BaseMVPActivity<P extends IPresenter> extends BaseActivity
     }
 
     /**
-     * 获取布局资源的id，用来填充页面
-     * @return 页面布局id
+     * Activity的onCreate方法执行时，所有子类不需要再实现oncreate方法，而是需要在此方法下处理初始化操作
+     * 去除getLayoutId方法而改成该方法，是为了查询代码时方便，有一个类似生命周期的方法名
+     * @param savedInstanceState Bundle
      */
-    protected abstract int getLayoutResId();
+    protected abstract void onCreateExecute(Bundle savedInstanceState);
 
     /**
      * 初始化布局控件

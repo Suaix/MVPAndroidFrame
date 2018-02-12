@@ -11,7 +11,7 @@ import com.summer.library.utils.ToastUtils;
 /**
  * @autho xia
  * @date 2018/1/7 下午7:31
- * @desciption 非MetalDesign风格的Activity的基类
+ * @desciption 非MetalDesign风格的Activity的基类，只是封装了简单的声明周期状态
  */
 public class BaseActivity extends FragmentActivity implements IUI{
 

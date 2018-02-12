@@ -104,17 +104,6 @@ public abstract class BaseMVPFragment<P extends IPresenter> extends BaseFragment
     protected abstract View onCreateViewExecute(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
-     * 初始化布局控件
-     * @param rootView 根布局
-     */
-    protected abstract void initView(View rootView);
-
-    /**
-     * 设置监听事件
-     */
-    protected abstract void addListener();
-
-    /**
      * 创建Presenter
      * @return Presenter
      */

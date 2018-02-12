@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * @autho xia
  * @date 2018/1/7 下午4:04
- * @desciption Prensenter的基类
+ * @desciption Prensenter的基类，持有View和Model的实例
  */
 public abstract class BasePresenter<U extends IUI, M extends IModel> implements IPresenter{
     /**

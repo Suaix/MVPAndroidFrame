@@ -38,14 +38,7 @@ public abstract class BaseMVPAppcompatActivity<P extends IPresenter> extends Bas
         mPresenter = createPresenter();
         mPresenter.initUI(this, getUI());
         //设置布局
-        int layoutResId = getLayoutResId();
-        setContentView(layoutResId);
-        //初始化布局控件
-        initView();
-        //设置监听
-        addListener();
-        //初始化数据
-        initData(mBundle);
+        onCreateExecute(savedInstanceState);
         getPresenter().onUICreate(savedInstanceState);
     }
 
@@ -108,21 +101,13 @@ public abstract class BaseMVPAppcompatActivity<P extends IPresenter> extends Bas
 
     }
 
-    /**
-     * 获取布局资源的id，用来填充页面
-     * @return 页面布局id
-     */
-    protected abstract int getLayoutResId();
 
     /**
-     * 初始化布局控件
+     * Activity的onCreate方法执行时，所有子类不需要再实现oncreate方法，而是需要在此方法下处理初始化操作
+     * 去除getLayoutId方法而改成该方法，是为了查询代码时方便，有一个类似生命周期的方法名
+     * @param savedInstanceState Bundle
      */
-    protected abstract void initView();
-
-    /**
-     * 给控件添加Listener
-     */
-    protected abstract void addListener();
+    protected abstract void onCreateExecute(Bundle savedInstanceState);
 
     /**
      * 创建Presenter
@@ -142,14 +127,6 @@ public abstract class BaseMVPAppcompatActivity<P extends IPresenter> extends Bas
      */
     protected final P getPresenter(){
         return mPresenter;
-    }
-
-    /**
-     * 初始化数据
-     * @param bundle Intent内部存储的数据
-     */
-    protected void initData(@Nullable Bundle bundle){
-
     }
 
     /**
