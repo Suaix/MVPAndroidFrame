@@ -2,11 +2,12 @@ package com.summer.library.mvpbase;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import com.summer.library.utils.ToastUtils;
+
+import eventbus.EventBus;
 
 /**
  * @autho xia
@@ -29,6 +30,9 @@ public class BaseActivity extends FragmentActivity implements IUI{
     protected void onStart() {
         super.onStart();
         isStoped = false;
+        if (isBindEventBusHere()){
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -53,6 +57,9 @@ public class BaseActivity extends FragmentActivity implements IUI{
     protected void onStop() {
         super.onStop();
         isStoped = true;
+        if (isBindEventBusHere() && EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -162,6 +169,8 @@ public class BaseActivity extends FragmentActivity implements IUI{
 
     }
 
-
+    protected boolean isBindEventBusHere(){
+        return false;
+    }
 
 }

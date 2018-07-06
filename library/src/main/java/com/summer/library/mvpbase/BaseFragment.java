@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 
 import com.summer.library.utils.ToastUtils;
 
+import eventbus.EventBus;
+
 /**
  * @autho xia
  * @date 2018/1/7 下午7:39
  * @desciption fragment的基类
  */
-public class BaseFragment extends Fragment implements IUI{
+public class BaseFragment extends Fragment implements IUI {
 
     private boolean isPaused;
     private boolean isStoped;
@@ -38,6 +40,9 @@ public class BaseFragment extends Fragment implements IUI{
     public void onStart() {
         super.onStart();
         isStoped = false;
+        if (isBindEventBusHere()) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -56,6 +61,9 @@ public class BaseFragment extends Fragment implements IUI{
     public void onStop() {
         super.onStop();
         isStoped = true;
+        if (isBindEventBusHere() && EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -166,5 +174,9 @@ public class BaseFragment extends Fragment implements IUI{
     @Override
     public void showToast(String msg) {
         ToastUtils.showToastShort(msg);
+    }
+
+    protected boolean isBindEventBusHere() {
+        return false;
     }
 }

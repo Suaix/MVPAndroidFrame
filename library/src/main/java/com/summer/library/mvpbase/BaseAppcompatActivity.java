@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.summer.library.utils.ToastUtils;
 
+import eventbus.EventBus;
+
 /**
  * @autho xia
  * @date 2018/1/7 下午4:23
@@ -30,6 +32,9 @@ public class BaseAppcompatActivity extends AppCompatActivity implements IUI {
     protected void onStart() {
         super.onStart();
         isStoped = false;
+        if (isBindEventBusHere()){
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -54,6 +59,9 @@ public class BaseAppcompatActivity extends AppCompatActivity implements IUI {
     protected void onStop() {
         super.onStop();
         isStoped = true;
+        if (isBindEventBusHere() && EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -161,6 +169,10 @@ public class BaseAppcompatActivity extends AppCompatActivity implements IUI {
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    protected boolean isBindEventBusHere(){
+        return false;
     }
 
 }

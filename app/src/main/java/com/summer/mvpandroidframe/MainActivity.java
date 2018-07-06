@@ -7,11 +7,17 @@ import android.widget.TextView;
 
 import com.summer.library.mvpbase.BaseMVPAppcompatActivity;
 import com.summer.library.mvpbase.IUI;
+import com.summer.mvpandroidframe.data.MessageEvent;
+
+import eventbus.EventBus;
+import eventbus.Subscribe;
+import eventbus.ThreadMode;
 
 public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
 
     private Button bt;
     private TextView tv;
+    private Button btSendEvent;
 
     @Override
     protected void onCreateExecute(Bundle savedInstanceState) {
@@ -26,6 +32,7 @@ public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
     private void initView() {
         bt = findViewById(R.id.bt_add_data);
         tv = findViewById(R.id.tv_content);
+        btSendEvent = findViewById(R.id.bt_send_event);
     }
 
     /**
@@ -36,6 +43,12 @@ public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
             @Override
             public void onClick(View view) {
                 getPresenter().test();
+            }
+        });
+        btSendEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new MessageEvent("This is message from event bus"));
             }
         });
     }
@@ -62,5 +75,15 @@ public class MainActivity extends BaseMVPAppcompatActivity<MainPrensenter> {
 
     public void onTestResult(String result){
         tv.setText(result);
+    }
+
+    @Override
+    protected boolean isBindEventBusHere() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessagEvent(MessageEvent event){
+        tv.setText(event.getMessage());
     }
 }
